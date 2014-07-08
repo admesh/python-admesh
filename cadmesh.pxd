@@ -74,3 +74,6 @@ cdef extern from "admesh/stl.h":
     void stl_facet_stats(stl_file *stl, stl_facet facet, int first)
     void stl_reallocate(stl_file *stl)
     void stl_get_size(stl_file *stl)
+    void stl_clear_error(stl_file *stl)
+    void stl_exit_on_error(stl_file *stl)
+    int stl_get_error(stl_file *stl)
