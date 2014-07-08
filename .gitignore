@@ -1,3 +1,6 @@
 build
 *.c
 *.so
+*.egg-info
+admesh.pyx
+cadmesh.pxd

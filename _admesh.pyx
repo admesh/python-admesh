@@ -23,19 +23,9 @@ cdef class Stl:
     def open(self, path):
         stl_open(&self._c_stl_file, path)
         if stl_get_error(&self._c_stl_file):
-            raise AdmeshError('Could not open STL {path}'.format(path=path))
+            stl_clear_error(&self._c_stl_file)
+            raise AdmeshError('stl_open')
         self._opened = True
-
-    def write_binary(self, path, label='admesh'):
-        stl_write_binary(&self._c_stl_file, path, label)
-        if stl_get_error(&self._c_stl_file):
-            raise AdmeshError('Could not save binary STL {path}'.format(path=path))
-
-
-    def write_ascii(self, path, label='admesh'):
-        stl_write_ascii(&self._c_stl_file, path, label)
-        if stl_get_error(&self._c_stl_file):
-            raise AdmeshError('Could not save ASCII STL {path}'.format(path=path))
 
     def __dealloc__(self):
         if self._opened:
