@@ -4,7 +4,6 @@ from __future__ import print_function
 
 from setuptools import setup, find_packages, Extension
 from Cython.Distutils import build_ext
-import subprocess
 
 class Autogen(build_ext, object):
     def run(self, *args, **kwargs):
