@@ -15,7 +15,18 @@ class Autogen(build_ext, object):
         ]
         PREFIX = 'stl_'
         PRECUT = len(PREFIX)
-        PXD_IGNORE = ['', 'exit_on_error', 'stats_out', 'print_neighbors', 'print_edges', 'scale_versor', 'add_facet']
+        PXD_IGNORE = [
+            '',
+            'exit_on_error',
+            'stats_out',
+            'print_neighbors',
+            'print_edges',
+            'scale_versor',
+            'add_facet',
+            'allocate',
+            'reallocate',
+            'count_facets',
+        ]
         PYX_IGNORE = ['open', 'close', 'get_error', 'clear_error']
 
         PXD = 'c' + NAME + '.pxd'
