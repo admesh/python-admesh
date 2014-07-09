@@ -8,7 +8,10 @@ import subprocess
 
 class Autogen(build_ext, object):
     def run(self, *args, **kwargs):
+        self.autogen()
+        super(Autogen, self).run(*args, **kwargs)
 
+    def autogen(self):
         NAME = 'admesh'
         HEADERS = [
             '/usr/include/admesh/stl.h',
@@ -35,6 +38,8 @@ class Autogen(build_ext, object):
         _PYX = '_' + PYX
 
         SELF = 'stl_file *stl'
+
+        print('generating {PXD} and {PYX}'.format(PXD=PXD, PYX=PYX))
 
         pxdlines = []
         pyxlines = []
@@ -129,7 +134,6 @@ class Autogen(build_ext, object):
             pyx.write(''.join(_pyxlines + pyxlines))
             pyx.write('\n')
 
-        super(Autogen, self).run(*args, **kwargs)
 
 setup(
     name='admesh',
