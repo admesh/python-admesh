@@ -4,3 +4,4 @@ build
 *.egg-info
 admesh.pyx
 cadmesh.pxd
+dist
