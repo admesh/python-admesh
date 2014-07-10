@@ -29,7 +29,7 @@ class Autogen(build_ext, object):
             'reallocate',
             'count_facets',
         ]
-        PYX_IGNORE = ['open', 'close', 'get_error', 'clear_error']
+        PYX_IGNORE = ['open', 'close', 'get_error', 'clear_error', 'repair']
 
         PXD = 'c' + NAME + '.pxd'
         _PXD = '_' + PXD
@@ -101,6 +101,8 @@ class Autogen(build_ext, object):
                         largs = args
                     pyxlines.append(', '.join(largs))
                 pyxlines.append('):')
+                pyxlines.append('\n        if not self._opened:')
+                pyxlines.append('\n            raise AdmeshError(\'STL not opened\')')
                 pyxlines.append('\n        ')
                 pyxlines.append(PREFIX+function)
                 pyxlines.append('(')
