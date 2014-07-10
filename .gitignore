@@ -5,3 +5,6 @@ build
 admesh.pyx
 cadmesh.pxd
 dist
+*.pyc
+__pycache__
+gccdump.s
