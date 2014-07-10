@@ -5,6 +5,9 @@ from __future__ import print_function
 from setuptools import setup, find_packages, Extension
 from Cython.Distutils import build_ext
 
+import subprocess
+import os
+
 class Autogen(build_ext, object):
     def run(self, *args, **kwargs):
         self.autogen()
@@ -13,7 +16,7 @@ class Autogen(build_ext, object):
     def autogen(self):
         NAME = 'admesh'
         HEADERS = [
-            '/usr/include/admesh/stl.h',
+            'admesh/stl.h',
         ]
         PREFIX = 'stl_'
         PRECUT = len(PREFIX)
@@ -44,7 +47,11 @@ class Autogen(build_ext, object):
         pyxlines = []
 
         for header in HEADERS:
-            with open(header) as h:
+            _header = self.get_header(header)
+            if not _header:
+                raise Exception('{h} not found, install admesh and/or point the compiler to it by '
+                                'setting CFLAGS environment variable with -I'.format(h=header))
+            with open(_header) as h:
                 lines = h.readlines()
             for line in lines:
                 if not line:
@@ -137,6 +144,26 @@ class Autogen(build_ext, object):
         with open(PYX, 'w') as pyx:
             pyx.write(''.join(_pyxlines + pyxlines))
             pyx.write('\n')
+
+    def get_header(self, header):
+        cflags = os.environ.get('CFLAGS','')
+        p = subprocess.Popen('gcc -print-prog-name=cc1'.split(), stdout=subprocess.PIPE)
+        cmd, err = p.communicate()
+        p = subprocess.Popen([cmd.rstrip(), '-v'] + cflags.split(), stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, log = p.communicate('')
+        log = log.split('\n')
+        read = False
+        for line in log:
+            if 'search starts here:' in line:
+                read = True
+                continue
+            if 'End of search list' in line:
+                break
+            if read:
+                candidate = os.path.join(line.strip(),header)
+                if os.path.isfile(candidate):
+                    return candidate
+        return None
 
 
 setup(
