@@ -101,6 +101,9 @@ class Autogen(build_ext, object):
                         largs = args
                     pyxlines.append(', '.join(largs))
                 pyxlines.append('):')
+                pyxlines.append('\n        """')
+                pyxlines.append(PREFIX+function)
+                pyxlines.append('"""')
                 pyxlines.append('\n        if not self._opened:')
                 pyxlines.append('\n            raise AdmeshError(\'STL not opened\')')
                 pyxlines.append('\n        ')
