@@ -46,10 +46,8 @@ class Autogen(build_ext, object):
         for header in HEADERS:
             _header = self.get_header(header)
             if not _header:
-                sys.stderr.write('Error: {h} not found, install admesh and/or point the compiler '
-                                 'to it by setting CFLAGS environment variable with -I\n'
-                                 '\nAdmesh can be found at: https://github.com/admesh/admesh'
-                                 '\n'.format(h=header))
+                sys.stderr.write('Error: {h} not found, install ADMesh first.\n\nSee README.rst'
+                                 'for more information\n'.format(h=header))
                 exit(1)
             with open(_header) as h:
                 lines = h.readlines()

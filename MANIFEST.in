@@ -1,1 +1,3 @@
 include _*
+include README.rst
+include COPYING
