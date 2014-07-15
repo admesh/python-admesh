@@ -2,6 +2,7 @@ from __future__ import print_function
 from Cython.Distutils import build_ext
 import subprocess
 import os
+import sys
 
 
 class Autogen(build_ext, object):
@@ -45,8 +46,11 @@ class Autogen(build_ext, object):
         for header in HEADERS:
             _header = self.get_header(header)
             if not _header:
-                raise Exception('{h} not found, install admesh and/or point the compiler to it by '
-                                'setting CFLAGS environment variable with -I'.format(h=header))
+                sys.stderr.write('Error: {h} not found, install admesh and/or point the compiler '
+                                 'to it by setting CFLAGS environment variable with -I\n'
+                                 '\nAdmesh can be found at: https://github.com/admesh/admesh'
+                                 '\n'.format(h=header))
+                exit(1)
             with open(_header) as h:
                 lines = h.readlines()
             for line in lines:
