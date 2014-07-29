@@ -13,7 +13,7 @@ setup(
     keywords='STL, mesh, 3D',
     author='Miro Hrončok',
     author_email='miro@hroncok.cz',
-    url='https://github.com/hroncok/python_admesh',
+    url='https://github.com/admesh/python-admesh',
     license='GPLv2+',
     packages=find_packages(),
     cmdclass={'build_ext': Autogen},
