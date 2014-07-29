@@ -7,7 +7,7 @@ long_description = ''.join(open('README.rst').readlines())
 
 setup(
     name='admesh',
-    version='0.98a1',
+    version='0.98',
     description='Python bindings for ADMesh, STL maipulation library',
     long_description=long_description,
     keywords='STL, mesh, 3D',
@@ -18,7 +18,7 @@ setup(
     packages=find_packages(),
     cmdclass={'build_ext': Autogen},
     ext_modules=[Extension("admesh", ["admesh.pyx"], libraries=["admesh"])],
-    classifiers=['Development Status :: 3 - Alpha',
+    classifiers=['Development Status :: 5 - Production/Stable',
                  'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
                  'Operating System :: POSIX :: Linux',
                  'Operating System :: MacOS :: MacOS X',
