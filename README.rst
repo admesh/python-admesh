@@ -4,6 +4,9 @@ ADMesh bindings for Python
 .. image:: https://badge.fury.io/py/admesh.svg
     :target: http://badge.fury.io/py/admesh
 
+.. image:: https://travis-ci.org/admesh/python-admesh.png?branch=master
+        :target: https://travis-ci.org/admesh/python-admesh
+
 .. image:: https://pypip.in/d/admesh/badge.png
         :target: https://pypi.python.org/pypi/admesh
 
