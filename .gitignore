@@ -8,3 +8,4 @@ dist
 *.pyc
 __pycache__
 gccdump.s
+test/block_*
