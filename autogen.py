@@ -79,7 +79,9 @@ class Autogen(build_ext, object):
                 if static:
                     continue # this is a hack, we don' want any static method NOW
                 args = []
+                chars = set()
                 for arg in line:
+                    char = arg.split()[-2]
                     arg = arg.split()[-1]
                     if arg.startswith('*'):
                         arg = arg[1:]
@@ -88,6 +90,8 @@ class Autogen(build_ext, object):
                     if arg.endswith('[3]'):
                         arg = arg[:-3]
                     args.append(arg)
+                    if char == 'char':
+                        chars.add(arg)
                 if static:
                     pyxlines.append('    @classmethod\n')
                 pyxlines.append('    def ')
@@ -114,6 +118,12 @@ class Autogen(build_ext, object):
                 pyxlines.append('"""')
                 pyxlines.append('\n        if not self._opened:')
                 pyxlines.append('\n            raise AdmeshError(\'STL not opened\')')
+                for idx, arg in enumerate(args):
+                    if arg not in chars:
+                        continue
+                    pyxlines.append('\n        ')
+                    pyxlines.append('by_{arg} = {arg}.encode(\'UTF-8\')'.format(arg=arg))
+                    args[idx] = 'by_' + arg
                 pyxlines.append('\n        ')
                 pyxlines.append(PREFIX+function)
                 pyxlines.append('(')

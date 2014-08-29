@@ -22,7 +22,8 @@ cdef class Stl:
 
     def open(self, path):
         """stl_open"""
-        stl_open(&self._c_stl_file, path)
+        by_path = path.encode('UTF-8')
+        stl_open(&self._c_stl_file, by_path)
         if stl_get_error(&self._c_stl_file):
             stl_clear_error(&self._c_stl_file)
             raise AdmeshError('stl_open')
