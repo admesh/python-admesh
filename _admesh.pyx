@@ -1,13 +1,6 @@
 from cadmesh cimport *
 
 
-class Trap:
-    def __init__(self):
-        self.log = []
-
-    def write(self, data):
-        self.log.append(data)
-
 class AdmeshError(Exception):
     pass
 
