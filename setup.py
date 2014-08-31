@@ -7,7 +7,7 @@ long_description = ''.join(open('README.rst').readlines())
 
 setup(
     name='admesh',
-    version='0.98',
+    version='0.98.1',
     description='Python bindings for ADMesh, STL maipulation library',
     long_description=long_description,
     keywords='STL, mesh, 3D',
