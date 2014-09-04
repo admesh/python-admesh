@@ -22,6 +22,7 @@ setup(
                  'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
                  'Operating System :: POSIX :: Linux',
                  'Operating System :: MacOS :: MacOS X',
+                 'Programming Language :: Cython',
                  'Programming Language :: Python :: 2',
                  'Programming Language :: Python :: 2.6',
                  'Programming Language :: Python :: 2.7',
