@@ -6,14 +6,15 @@ python:
   - "3.4"
   - "pypy"
 before_install:
-  - wget https://github.com/admesh/admesh/releases/download/v0.98.0/admesh-0.98.0.tar.gz
-  - tar -zxf admesh-0.98.0.tar.gz
-  - cd admesh-0.98.0
+  - wget https://github.com/admesh/admesh/releases/download/v0.98.1/admesh-0.98.1.tar.gz
+  - tar -zxf admesh-0.98.1.tar.gz
+  - cd admesh-0.98.1
   - ./configure
   - make
   - sudo make install
+  - sudo ldconfig
   - cd ..
 install:
   - pip install Cython
   - python setup.py install
-script: LD_LIBRARY_PATH=/usr/local/lib py.test -v
+script: py.test -v
