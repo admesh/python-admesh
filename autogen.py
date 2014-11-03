@@ -158,9 +158,7 @@ class Autogen(build_ext, object):
 
     def get_header(self, header):
         cflags = os.environ.get('CFLAGS','')
-        p = subprocess.Popen('gcc -print-prog-name=cc1'.split(), stdout=subprocess.PIPE)
-        cmd, err = p.communicate()
-        p = subprocess.Popen([cmd.rstrip(), '-v'] + cflags.split(), stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+        p = subprocess.Popen('gcc -v -E -'.split() + cflags.split(), stdin=subprocess.PIPE, stderr=subprocess.PIPE)
         out, log = p.communicate('')
         log = log.decode('utf8').split('\n')
         read = False
@@ -173,6 +171,7 @@ class Autogen(build_ext, object):
             if read:
                 candidate = os.path.join(line.strip(),header)
                 if os.path.isfile(candidate):
+                    print("Found %s" % candidate)
                     return candidate
         return None
 
