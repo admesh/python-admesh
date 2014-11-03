@@ -171,7 +171,7 @@ class Autogen(build_ext, object):
             if read:
                 candidate = os.path.join(line.strip(),header)
                 if os.path.isfile(candidate):
-                    print("Found %s" % candidate)
+                    print("found %s" % candidate)
                     return candidate
         return None
 
