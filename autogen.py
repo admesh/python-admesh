@@ -158,7 +158,7 @@ class Autogen(build_ext, object):
 
     def get_header(self, header):
         cflags = os.environ.get('CFLAGS','')
-        p = subprocess.Popen('gcc -v -E -'.split() + cflags.split(), stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+        p = subprocess.Popen('gcc -v -E -'.split() + cflags.split(), stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, log = p.communicate('')
         log = log.decode('utf8').split('\n')
         read = False
