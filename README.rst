@@ -27,7 +27,7 @@ In case your ADMesh library is located in non-standard location, you'll have to 
 
 .. code:: sh
 
-    LDFLAGS='-L/path/to/library' CFLAGS='-L/path/to/header' ./setup.py install
+    LDFLAGS='-L/path/to/library' CFLAGS='-I/path/to/header' ./setup.py install
 
 Usage
 -----
