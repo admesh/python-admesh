@@ -1,20 +1,28 @@
 language: python
 python:
-  - "2.6"
-  - "2.7"
-  - "3.3"
-  - "3.4"
-  - "pypy"
+- '2.6'
+- '2.7'
+- '3.3'
+- '3.4'
+- pypy
 before_install:
-  - wget https://github.com/admesh/admesh/releases/download/v0.98.1/admesh-0.98.1.tar.gz
-  - tar -zxf admesh-0.98.1.tar.gz
-  - cd admesh-0.98.1
-  - ./configure
-  - make
-  - sudo make install
-  - sudo ldconfig
-  - cd ..
+- wget https://github.com/admesh/admesh/releases/download/v0.98.1/admesh-0.98.1.tar.gz
+- tar -zxf admesh-0.98.1.tar.gz
+- cd admesh-0.98.1
+- "./configure"
+- make
+- sudo make install
+- sudo ldconfig
+- cd ..
 install:
-  - pip install -r requirements.txt
-  - python setup.py install
+- pip install -r requirements.txt
+- python setup.py install
 script: py.test -v
+deploy:
+  provider: pypi
+  user: hroncok
+  password:
+    secure: KAJOtf4HDXzL1LQsqGVPoHPniLcGcSwHvtp6gyiLUFwKmhIoqd7+ONSCVfDBCuIysOcsyXHGt1piMrMgyvuykupnFu43MDatWYk9KqaBs6/gyhoI/Ha7tavAiTMlaToEyNQGh7K6FZoVbVpEELtnuytRkWPqGfNTonEpWnmWMKw=
+  on:
+    tags: true
+    repo: admesh/python-admesh
