@@ -1,15 +1,19 @@
 cdef extern from "admesh/stl.h":
     ctypedef struct stl_vertex:
-        pass
+        float x
+        float y
+        float z
 
     ctypedef struct stl_normal:
-        pass
+        float x
+        float y
+        float z
 
     ctypedef struct stl_facet:
         pass
 
     cdef enum stl_type:
-        pass
+        binary, ascii, inmemory
 
     ctypedef struct stl_edge:
         pass
@@ -24,7 +28,38 @@ cdef extern from "admesh/stl.h":
         pass
 
     ctypedef struct stl_stats:
-        pass
+        char          header[81]
+        stl_type      type
+        int           number_of_facets
+        stl_vertex    max
+        stl_vertex    min
+        stl_vertex    size
+        float         bounding_diameter
+        float         shortest_edge
+        float         volume
+        unsigned      number_of_blocks
+        int           connected_edges
+        int           connected_facets_1_edge
+        int           connected_facets_2_edge
+        int           connected_facets_3_edge
+        int           facets_w_1_bad_edge
+        int           facets_w_2_bad_edge
+        int           facets_w_3_bad_edge
+        int           original_num_facets
+        int           edges_fixed
+        int           degenerate_facets
+        int           facets_removed
+        int           facets_added
+        int           facets_reversed
+        int           backwards_edges
+        int           normals_fixed
+        int           number_of_parts
+        int           malloced
+        int           freed
+        int           facets_malloced
+        int           collisions
+        int           shared_vertices
+        int           shared_malloced
 
     ctypedef struct stl_file:
-        pass
+        stl_stats     stats

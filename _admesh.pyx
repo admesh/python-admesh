@@ -8,10 +8,16 @@ class AdmeshError(Exception):
 cdef class Stl:
     cdef stl_file _c_stl_file
     cdef bint _opened
+
     def __cinit__(self, path=''):
         self._opened = False
         if path:
             self.open(path)
+
+    def get_stats(self):
+        return self._c_stl_file.stats
+
+    stats = property(lambda self: self.get_stats())
 
     def open(self, path):
         """stl_open"""
