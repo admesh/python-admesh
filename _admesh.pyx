@@ -9,6 +9,10 @@ cdef class Stl:
     cdef stl_file _c_stl_file
     cdef bint _opened
 
+    BINARY = 0
+    ASCII = 1
+    INMEMORY = 2
+
     def __cinit__(self, path=''):
         self._opened = False
         if path:
