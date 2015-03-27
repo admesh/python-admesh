@@ -61,4 +61,4 @@ Use the ``Stl`` class provided.
             vertex['y']
             vertex['z']
 
-Note that all ADMesh functions start with ``stl_`` prefix and the methods do not. Also note that not all ADMesh functions are provided, because some would require more complicated approach and are not considered worthy. In case you are missing some functions, create a `new issue <https://github.com/admesh/python-admesh/issues/new>`_.
+Note that all ADMesh functions start with ``stl_`` prefix and the methods do not. Also note that not all ADMesh functions are provided, because some would require more complicated approach and are not considered worthy. In case you are missing some functions, create `new issue <https://github.com/admesh/python-admesh/issues/new>`_.
