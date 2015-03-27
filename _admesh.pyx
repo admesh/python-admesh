@@ -24,6 +24,12 @@ cdef class Stl:
 
     stats = property(lambda self: self.get_stats())
 
+    def __str__(self):
+        header = str(self._c_stl_file.stats.header.decode('ascii'))
+        if self._c_stl_file.stats.type == Stl.ASCII and header.startswith('solid '):
+            header = header[len('solid '):].strip()
+        return 'Stl(\'{header}\')'.format(header=header)
+
     def __iter__(self):
         self._iterindex = 0
         return self
