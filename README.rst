@@ -36,8 +36,29 @@ Use the ``Stl`` class provided.
 
 .. code:: python
 
-    from admesh import Stl
-    stl = Stl('file.stl')
-    help(stl) # observe the available methods
+    import admesh
+    
+    # load an STL file
+    stl = admesh.Stl('file.stl')
+    
+    # observe the available methods
+    help(stl)
+    
+    # read the stats
+    s.stats
+    
+    # see how many facets are there
+    len(stl)
+    
+    # walk the facets
+    for facet in stl:
+        # get the normal
+        facet['normal']
+        # walk the vertices
+        for vertex in facet['vertex']:
+            # read the coordinates
+            vertex['x']
+            vertex['y']
+            vertex['z']
 
 Note that all ADMesh functions start with ``stl_`` prefix and the methods do not. Also note that not all ADMesh functions are provided, because some would require more complicated approach and are not considered worthy. In case you are missing some functions, create a `new issue <https://github.com/admesh/python-admesh/issues/new>`_.
