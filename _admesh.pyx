@@ -8,6 +8,7 @@ class AdmeshError(Exception):
 cdef class Stl:
     cdef stl_file _c_stl_file
     cdef bint _opened
+    cdef int _iterindex
 
     BINARY = 0
     ASCII = 1
@@ -22,6 +23,19 @@ cdef class Stl:
         return self._c_stl_file.stats
 
     stats = property(lambda self: self.get_stats())
+
+    def __iter__(self):
+        self._iterindex = 0
+        return self
+
+    def __next__(self):
+        if self._iterindex >= len(self):
+            raise StopIteration
+        self._iterindex += 1
+        return self._c_stl_file.facet_start[self._iterindex - 1]
+
+    def __len__(self):
+        return self._c_stl_file.stats.number_of_facets
 
     def open(self, path):
         """stl_open"""

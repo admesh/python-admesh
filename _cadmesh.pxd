@@ -9,8 +9,12 @@ cdef extern from "admesh/stl.h":
         float y
         float z
 
+    ctypedef char stl_extra[2]
+
     ctypedef struct stl_facet:
-        pass
+        stl_normal normal
+        stl_vertex vertex[3]
+        stl_extra  extra
 
     cdef enum stl_type:
         binary, ascii, inmemory
@@ -63,3 +67,4 @@ cdef extern from "admesh/stl.h":
 
     ctypedef struct stl_file:
         stl_stats     stats
+        stl_facet     *facet_start
