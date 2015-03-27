@@ -15,4 +15,3 @@ class TestType(object):
         stl1.write_binary('test/block_binary.stl')
         stl2 = Stl('test/block_binary.stl')
         assert stl2.stats['type'] == Stl.BINARY
-

@@ -89,7 +89,6 @@ cdef class Stl:
             stl_clear_error(&self._c_stl_file)
             raise AdmeshError('stl_repair')
 
-
     def __dealloc__(self):
         if self._opened:
             stl_close(&self._c_stl_file)

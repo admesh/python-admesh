@@ -33,5 +33,5 @@ setup(
                  'Programming Language :: Python :: Implementation :: CPython',
                  'Programming Language :: Python :: Implementation :: PyPy',
                  'Topic :: Multimedia :: Graphics :: 3D Modeling',
-                ],
+                 ],
 )

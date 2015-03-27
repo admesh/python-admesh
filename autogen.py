@@ -57,12 +57,12 @@ class Autogen(build_ext, object):
             for line in lines:
                 if not line:
                     continue
-                line = line[:-2] # cut off ;
+                line = line[:-2]  # cut off ;
                 line = line.split()
                 if not line or line[0] != 'extern':
                     continue
-                pxd_line = '    ' + ' '.join(line[1:]) + '\n' # void stl_foo(...)
-                line = ' '.join(line[2:]) # stl_foo(...)
+                pxd_line = '    ' + ' '.join(line[1:]) + '\n'  # void stl_foo(...)
+                line = ' '.join(line[2:])  # stl_foo(...)
                 line = line.split('(')
                 function = line[0][PRECUT:]
                 if function in PXD_IGNORE:
@@ -77,7 +77,7 @@ class Autogen(build_ext, object):
                     static = False
                     line = line[1:]
                 if static:
-                    continue # this is a hack, we don' want any static method NOW
+                    continue  # this is a hack, we don' want any static method NOW
                 args = []
                 chars = set()
                 for arg in line:
@@ -140,25 +140,23 @@ class Autogen(build_ext, object):
                 pyxlines.append(PREFIX+function)
                 pyxlines.append('\')\n')
                 pyxlines.append('\n')
-                
 
         with open(_PXD, 'r') as _pxd:
             _pxdlines = _pxd.readlines() + ['\n']
 
         with open(PXD, 'w') as pxd:
             pxd.write(''.join(_pxdlines + pxdlines))
-            pxd.write('\n')
 
         with open(_PYX, 'r') as _pyx:
             _pyxlines = _pyx.readlines() + ['\n']
 
         with open(PYX, 'w') as pyx:
             pyx.write(''.join(_pyxlines + pyxlines))
-            pyx.write('\n')
 
     def get_header(self, header):
-        cflags = os.environ.get('CFLAGS','')
-        p = subprocess.Popen('gcc -v -E -'.split() + cflags.split(), stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        cflags = os.environ.get('CFLAGS', '')
+        p = subprocess.Popen('gcc -v -E -'.split() + cflags.split(), stdin=subprocess.PIPE,
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, log = p.communicate('')
         log = log.decode('utf8').split('\n')
         read = False
@@ -169,9 +167,8 @@ class Autogen(build_ext, object):
             if 'End of search list' in line:
                 break
             if read:
-                candidate = os.path.join(line.strip(),header)
+                candidate = os.path.join(line.strip(), header)
                 if os.path.isfile(candidate):
                     print("found %s" % candidate)
                     return candidate
         return None
-
