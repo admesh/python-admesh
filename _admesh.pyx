@@ -5,7 +5,7 @@ class AdmeshError(Exception):
     pass
 
 
-cdef class Stl:
+cdef class Stl(object):
     cdef stl_file _c_stl_file
     cdef bint _opened
     cdef int _iterindex
