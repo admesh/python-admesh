@@ -15,7 +15,7 @@ class TestObjectCapabilities(object):
         facets = list(stl)
         assert len(facets) == 12
         assert len(facets[0]['vertex']) == 3
-        assert facets[0]['vertex'][0]['x'] + 1.96850395 < 0.0000001
+        assert facets[0]['vertex'][0]['x'] == 0
 
     def test_str(self):
         '''Tests the output of str'''

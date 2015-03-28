@@ -18,8 +18,7 @@ class TestStats(object):
         '''Tests the volume of the block'''
         stl = Stl('test/block.stl')
         stl.calculate_volume()
-        assert stl.stats['volume'] > 61
-        assert stl.stats['volume'] < 62
+        assert stl.stats['volume'] == 1
 
     def test_header(self):
         '''Tests the header of the block'''
