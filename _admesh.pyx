@@ -19,10 +19,10 @@ cdef class Stl:
         if path:
             self.open(path)
 
-    def get_stats(self):
-        return self._c_stl_file.stats
-
-    stats = property(lambda self: self.get_stats())
+    property stats:
+        """The statistics about the STL model"""
+        def __get__(self):
+            return self._c_stl_file.stats
 
     def __str__(self):
         header = str(self._c_stl_file.stats.header.decode('ascii'))

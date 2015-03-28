@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
+import sys
+import pytest
 from admesh import Stl
+
+
+pypy2 = '__pypy__' in sys.builtin_module_names and sys.version_info.major == 2
 
 
 class TestStats(object):
@@ -20,3 +25,15 @@ class TestStats(object):
         '''Tests the header of the block'''
         stl = Stl('test/block.stl')
         assert stl.stats['header'] == 'solid  admesh'.encode('UTF-8')
+
+    def test_write_to_stats(self):
+        '''Test if writing to stats raises exception'''
+        stl = Stl()
+        with pytest.raises(TypeError if pypy2 else AttributeError):
+                stl.stats = {}
+
+    def test_delete_stats(self):
+        '''Test if deleting stats raises exception'''
+        stl = Stl()
+        with pytest.raises(AttributeError):
+                del stl.stats
