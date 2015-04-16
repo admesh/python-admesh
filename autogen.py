@@ -110,6 +110,11 @@ class Autogen(build_ext, object):
             static = True
             return  # this is a hack, we don' want any static method NOW
 
+        args, chars = Autogen.process_argdefs(argdeflist)
+        self.pyx.write(Autogen.format_function(function, static, args, chars))
+
+    @classmethod
+    def process_argdefs(cls, argdeflist):
         args = []
         chars = set()
         for arg in argdeflist:
@@ -124,8 +129,7 @@ class Autogen(build_ext, object):
             args.append(arg)
             if ctype == 'char':
                 chars.add(arg)
-
-        self.pyx.write(Autogen.format_function(function, static, args, chars))
+        return args, chars
 
     @classmethod
     def format_function(cls, function, static, args, chars):
