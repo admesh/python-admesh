@@ -15,7 +15,7 @@ setup(
     author_email='miro@hroncok.cz',
     url='https://github.com/admesh/python-admesh',
     license='GPLv2+',
-    install_requires=['Cython'],
+    install_requires=['Cython>=0.22'],
     packages=find_packages(),
     cmdclass={'build_ext': Autogen},
     ext_modules=[Extension("admesh", ["admesh.pyx"], libraries=["admesh"])],
