@@ -8,6 +8,7 @@ python:
 - pypy3
 env:
 - ADMESH=0.98.1
+- ADMESH=0.98.2
 # Use the new container-based infrastructure
 sudo: false
 cache:
