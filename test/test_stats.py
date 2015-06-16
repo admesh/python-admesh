@@ -29,10 +29,10 @@ class TestStats(object):
         '''Test if writing to stats raises exception'''
         stl = Stl()
         with pytest.raises(TypeError if pypy2 else AttributeError):
-                stl.stats = {}
+            stl.stats = {}
 
     def test_delete_stats(self):
         '''Test if deleting stats raises exception'''
         stl = Stl()
         with pytest.raises(AttributeError):
-                del stl.stats
+            del stl.stats
