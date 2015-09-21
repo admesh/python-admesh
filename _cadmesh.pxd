@@ -16,7 +16,7 @@ cdef extern from "admesh/stl.h":
         stl_vertex vertex[3]
         stl_extra  extra
 
-    cdef enum stl_type:
+    ctypedef enum stl_type:
         binary, ascii, inmemory
 
     ctypedef struct stl_edge:
