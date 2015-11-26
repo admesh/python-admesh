@@ -45,7 +45,7 @@ Use the ``Stl`` class provided.
     help(stl)
     
     # read the stats
-    s.stats
+    stl.stats
     
     # see how many facets are there
     len(stl)
