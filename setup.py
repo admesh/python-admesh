@@ -1,9 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from setuptools import setup, find_packages, Extension
-from autogen import Autogen
+
+
+def _autogen(*args, **kwargs):
+    from autogen import Autogen
+    return Autogen(*args, **kwargs)
 
 long_description = ''.join(open('README.rst').readlines())
+requires = ['Cython>=0.22']
 
 setup(
     name='admesh',
@@ -15,9 +20,10 @@ setup(
     author_email='miro@hroncok.cz',
     url='https://github.com/admesh/python-admesh',
     license='GPLv2+',
-    install_requires=['Cython>=0.22'],
+    setup_requires=requires,
+    install_requires=requires,
     packages=find_packages(),
-    cmdclass={'build_ext': Autogen},
+    cmdclass={'build_ext': _autogen},
     ext_modules=[Extension("admesh", ["admesh.pyx"], libraries=["admesh"])],
     classifiers=['Development Status :: 5 - Production/Stable',
                  'Intended Audience :: Developers',

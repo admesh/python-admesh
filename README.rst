@@ -15,7 +15,7 @@ This module provides bindings for the `ADMesh <https://github.com/admesh/admesh>
 Installation
 ------------
 
-First, you'll need to install the `ADMesh <https://github.com/admesh/admesh>`_ library. This release is designed for ADMesh 0.98.x. Follow the instructions there. Also, you'll need Cython. Then you can install this as usual with **one** of the following:
+First, you'll need to install the `ADMesh <https://github.com/admesh/admesh>`_ library. This release is designed for ADMesh 0.98.x. Follow the instructions there. Then you can install this as usual with **one** of the following:
 
 .. code:: sh
 
