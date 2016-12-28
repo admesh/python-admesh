@@ -21,7 +21,6 @@ class Autogen(build_ext, object):
         'scale_versor',
         'add_facet',
         'allocate',
-        'reallocate',
         'count_facets',
         'write_binary_block',
         'put_little_int',
