@@ -1,6 +1,5 @@
 from cadmesh cimport *
 
-
 class AdmeshError(Exception):
     pass
 
@@ -17,7 +16,7 @@ cdef class Stl(object):
     def __cinit__(self, path=''):
         self._opened = False
         if path:
-            self.open(path)
+            self._open(path)
 
     property stats:
         """The statistics about the STL model"""
@@ -43,14 +42,20 @@ cdef class Stl(object):
     def __len__(self):
         return self._c_stl_file.stats.number_of_facets
 
-    def open(self, path):
-        """stl_open"""
+    def _open(self, path):
         by_path = path.encode('UTF-8')
         stl_open(&self._c_stl_file, by_path)
         if stl_get_error(&self._c_stl_file):
             stl_clear_error(&self._c_stl_file)
             raise AdmeshError('stl_open')
         self._opened = True
+
+    def open(self, path):
+        """stl_open"""
+        import warnings
+        warnings.warn('The open() method is deprecated. Provide the path when '
+                      'initializing the object instead.', DeprecationWarning)
+        self._open(path)
 
     def repair(self,
                fixall_flag=True,
