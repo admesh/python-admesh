@@ -39,8 +39,7 @@ class Autogen(build_ext, object):
 
     TEMPLATE = '''    def {pyfunction}({pyargs}):
         """{docstring}"""
-        if not self._opened:
-            raise AdmeshError('STL not opened'){extra}
+        {extra}
         {cfunction}({cargs})
         if stl_get_error(&self._c_stl_file):
             stl_clear_error(&self._c_stl_file)
