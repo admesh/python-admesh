@@ -21,13 +21,13 @@ class Autogen(build_ext, object):
         'scale_versor',
         'add_facet',
         'allocate',
-        'reallocate',
         'count_facets',
         'write_binary_block',
         'put_little_int',
         'put_little_float',
     ]
-    PYX_IGNORE = ['open', 'close', 'get_error', 'clear_error', 'repair']
+    PYX_IGNORE = ['open', 'close', 'get_error', 'clear_error', 'repair',
+                  'reallocate']
 
     PXD = 'c' + NAME + '.pxd'
     _PXD = '_' + PXD

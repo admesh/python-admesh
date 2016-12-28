@@ -51,6 +51,28 @@ cdef class Stl(object):
             stl_clear_error(&self._c_stl_file)
             raise AdmeshError('stl_open')
 
+    def add_facets(self, facets):
+        """
+        Add one or more facets
+
+        Example usage:
+            stl_object.add_facets([{
+                "normal": {"x": 1.0, "y": 1.0, "z": 1.0},
+                "vertex": [
+                    {"x": 0, "y": 0, "z": 0},
+                    {"x": 1, "y": 0, "z": 0},
+                    {"x": 0, "y": 1, "z": 0},
+                ],
+                "extra": "",
+            }])
+        """
+        current_facet_index = self._c_stl_file.stats.number_of_facets
+        self._c_stl_file.stats.number_of_facets += len(facets)
+        stl_reallocate(&self._c_stl_file)
+        for facet in facets:
+            self._c_stl_file.facet_start[current_facet_index] = facet
+            current_facet_index += 1
+
     def repair(self,
                fixall_flag=True,
                exact_flag=False,
