@@ -83,13 +83,18 @@ cdef class Stl(object):
             stl_clear_error(&self._c_stl_file)
             raise AdmeshError('stl_reallocate')
         for facet in facets:
-            for i in range(3):
-                facet_struct.vertex[i] = stl_vertex(facet[0][i][0],
-                                                    facet[0][i][1],
-                                                    facet[0][i][2])
-            facet_struct.normal = stl_normal(facet[1][0],
-                                             facet[1][1],
-                                             facet[1][2])
+            if isinstance(facet, dict):
+                facet_struct.vertex = facet['vertex']
+                facet_struct.normal = facet['normal']
+                # we will not copy extra, as it is mostly garbage
+            else:
+                for i in range(3):
+                    facet_struct.vertex[i] = stl_vertex(facet[0][i][0],
+                                                        facet[0][i][1],
+                                                        facet[0][i][2])
+                facet_struct.normal = stl_normal(facet[1][0],
+                                                 facet[1][1],
+                                                 facet[1][2])
             self._c_stl_file.facet_start[current_facet_index] = facet_struct
             stl_facet_stats(&self._c_stl_file, facet_struct, first)
             first = False
