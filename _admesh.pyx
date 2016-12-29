@@ -71,6 +71,7 @@ cdef class Stl(object):
         stl_reallocate(&self._c_stl_file)
         for facet in facets:
             self._c_stl_file.facet_start[current_facet_index] = facet
+            stl_facet_stats(&self._c_stl_file, self._c_stl_file.facet_start[current_facet_index], False);
             current_facet_index += 1
 
     def repair(self,
