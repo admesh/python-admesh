@@ -1,3 +1,4 @@
+from libc.math cimport sqrt
 from cadmesh cimport *
 
 class AdmeshError(Exception):
@@ -89,6 +90,14 @@ cdef class Stl(object):
             self._c_stl_file.facet_start[current_facet_index] = facet_struct
             stl_facet_stats(&self._c_stl_file, facet_struct, False)
             current_facet_index += 1
+        self._c_stl_file.stats.size.x = self._c_stl_file.stats.max.x - self._c_stl_file.stats.min.x
+        self._c_stl_file.stats.size.y = self._c_stl_file.stats.max.y - self._c_stl_file.stats.min.y
+        self._c_stl_file.stats.size.z = self._c_stl_file.stats.max.z - self._c_stl_file.stats.min.z
+        self._c_stl_file.stats.bounding_diameter = sqrt(
+            self._c_stl_file.stats.size.x * self._c_stl_file.stats.size.x +
+            self._c_stl_file.stats.size.y * self._c_stl_file.stats.size.y +
+            self._c_stl_file.stats.size.z * self._c_stl_file.stats.size.z
+        )
 
     def repair(self,
                fixall_flag=True,

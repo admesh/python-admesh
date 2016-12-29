@@ -29,8 +29,10 @@ class TestStats(object):
         '''Tests if adding new facets updates the mesh stats'''
         stl = Stl('test/block.stl')
         max_x = stl.stats['max']['x']
+        bounding_diameter = stl.stats['bounding_diameter']
         stl.add_facets([(((0, 0, 0), (1, 1, 1), (max_x + 1, 0, 0)), (1, 0, 0))])
         assert max_x + 1 == stl.stats['max']['x']
+        assert bounding_diameter < stl.stats['bounding_diameter']
 
     def test_write_to_stats(self):
         '''Test if writing to stats raises exception'''
