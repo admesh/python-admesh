@@ -18,6 +18,9 @@ cdef class Stl(object):
             self._open(path)
         else:
             stl_initialize(&self._c_stl_file)
+            if stl_get_error(&self._c_stl_file):
+                stl_clear_error(&self._c_stl_file)
+                raise AdmeshError('stl_initialize')
             self._c_stl_file.stats.type = Stl.INMEMORY
 
     property stats:
