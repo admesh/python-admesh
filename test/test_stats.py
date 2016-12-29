@@ -34,6 +34,22 @@ class TestStats(object):
         assert max_x + 1 == stl.stats['max']['x']
         assert bounding_diameter < stl.stats['bounding_diameter']
 
+    def test_stats_are_same_with_created(self):
+        ''''Test a manually constructed cube has the same stats as if loaded'''
+        XYZ = ('x', 'y', 'z')
+        stl1 = Stl('test/block.stl')
+        facets = [[[[v[a] for a in XYZ] for v in f['vertex']],
+                   [f['normal'][a] for a in XYZ]] for f in stl1]
+        stl2 = Stl()
+        stl2.add_facets(facets)
+        stats1, stats2 = stl1.stats, stl2.stats
+        for stats in (stats1, stats2):
+            del stats['type']  # ASCII != INMEMORY
+            del stats['original_num_facets']  # 12 != 0
+            del stats['header']  # nothing != "solid  admesh"
+            del stats['shortest_edge']  # different but bogus in both places
+        assert stats1 == stats2
+
     def test_write_to_stats(self):
         '''Test if writing to stats raises exception'''
         stl = Stl()
