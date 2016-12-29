@@ -47,7 +47,6 @@ class TestStats(object):
             del stats['type']  # ASCII != INMEMORY
             del stats['original_num_facets']  # 12 != 0
             del stats['header']  # nothing != "solid  admesh"
-            del stats['shortest_edge']  # different but bogus in both places
         assert stats1 == stats2
 
     def test_write_to_stats(self):

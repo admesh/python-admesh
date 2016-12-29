@@ -71,7 +71,10 @@ cdef class Stl(object):
         """
         cdef stl_facet facet_struct
         cdef size_t i
-        current_facet_index = self._c_stl_file.stats.number_of_facets
+        cdef bint first = False
+        cdef int current_facet_index = self._c_stl_file.stats.number_of_facets
+        if current_facet_index == 0:
+            first = True
         self._c_stl_file.stats.number_of_facets += len(facets)
         stl_reallocate(&self._c_stl_file)
         if stl_get_error(&self._c_stl_file):
@@ -88,7 +91,8 @@ cdef class Stl(object):
                                              facet[1][1],
                                              facet[1][2])
             self._c_stl_file.facet_start[current_facet_index] = facet_struct
-            stl_facet_stats(&self._c_stl_file, facet_struct, False)
+            stl_facet_stats(&self._c_stl_file, facet_struct, first)
+            first = False
             current_facet_index += 1
         self._c_stl_file.stats.size.x = self._c_stl_file.stats.max.x - self._c_stl_file.stats.min.x
         self._c_stl_file.stats.size.y = self._c_stl_file.stats.max.y - self._c_stl_file.stats.min.y
