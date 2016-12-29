@@ -34,12 +34,16 @@ class TestStats(object):
         assert max_x + 1 == stl.stats['max']['x']
         assert bounding_diameter < stl.stats['bounding_diameter']
 
-    def test_stats_are_same_with_created(self):
+    @pytest.mark.parametrize('type', ('iterable', 'dict'))
+    def test_stats_are_same_with_created(self, type):
         ''''Test a manually constructed cube has the same stats as if loaded'''
         XYZ = ('x', 'y', 'z')
         stl1 = Stl('test/block.stl')
-        facets = [[[[v[a] for a in XYZ] for v in f['vertex']],
-                   [f['normal'][a] for a in XYZ]] for f in stl1]
+        if type == 'iterable':
+            facets = [[[[v[a] for a in XYZ] for v in f['vertex']],
+                       [f['normal'][a] for a in XYZ]] for f in stl1]
+        else:
+            facets = list(stl1)
         stl2 = Stl()
         stl2.add_facets(facets)
         stats1, stats2 = stl1.stats, stl2.stats
