@@ -10,9 +10,6 @@ python:
 env:
 - ADMESH=0.98.1
 - ADMESH=0.98.2
-matrix:
-  allow_failures:
-  - python: pypy3
 # Use the new container-based infrastructure
 sudo: false
 cache:
