@@ -14,9 +14,15 @@ cdef class Stl(object):
     INMEMORY = 2
 
     def __cinit__(self, path=''):
-        self._opened = False
         if path:
-            self._open(path)
+            by_path = path.encode('UTF-8')
+            stl_open(&self._c_stl_file, by_path)
+            if stl_get_error(&self._c_stl_file):
+                stl_clear_error(&self._c_stl_file)
+                raise AdmeshError('stl_open')
+        else:
+            stl_initialize(&self._c_stl_file)
+            self._c_stl_file.stats.type = Stl.INMEMORY
 
     property stats:
         """The statistics about the STL model"""
@@ -42,13 +48,27 @@ cdef class Stl(object):
     def __len__(self):
         return self._c_stl_file.stats.number_of_facets
 
-    def _open(self, path):
-        by_path = path.encode('UTF-8')
-        stl_open(&self._c_stl_file, by_path)
-        if stl_get_error(&self._c_stl_file):
-            stl_clear_error(&self._c_stl_file)
-            raise AdmeshError('stl_open')
-        self._opened = True
+    def add_facets(self, facets):
+        """
+        add one or more facets
+
+        Example usage:
+            stl_object.add_facets([{
+                "normal": {"x": 1.0, "y": 1.0, "z": 1.0},
+                "vertex": [
+                    {"x": 0, "y": 0, "z": 0},
+                    {"x": 1, "y": 0, "z": 0},
+                    {"x": 0, "y": 1, "z": 0},
+                ],
+                "extra": "",
+            }])
+        """
+        current_facet_index = self._c_stl_file.stats.number_of_facets
+        self._c_stl_file.stats.number_of_facets += len(facets)
+        stl_reallocate(&self._c_stl_file)
+        for facet in facets:
+            self._c_stl_file.facet_start[current_facet_index] = facet
+            current_facet_index += 1
 
     def open(self, path):
         """stl_open"""
@@ -73,8 +93,6 @@ cdef class Stl(object):
                reverse_all_flag=False,
                verbose_flag=True):
         """stl_repair"""
-        if not self._opened:
-            raise AdmeshError('STL not opened')
         stl_repair(&self._c_stl_file,
                    fixall_flag,
                    exact_flag,
@@ -95,5 +113,4 @@ cdef class Stl(object):
             raise AdmeshError('stl_repair')
 
     def __dealloc__(self):
-        if self._opened:
-            stl_close(&self._c_stl_file)
+        stl_close(&self._c_stl_file)
