@@ -56,22 +56,28 @@ cdef class Stl(object):
         Add one or more facets
 
         Example usage:
-            stl_object.add_facets([{
-                "normal": {"x": 1.0, "y": 1.0, "z": 1.0},
-                "vertex": [
-                    {"x": 0, "y": 0, "z": 0},
-                    {"x": 1, "y": 0, "z": 0},
-                    {"x": 0, "y": 1, "z": 0},
-                ],
-                "extra": "",
-            }])
+            stl_object.add_facets([
+                (((0, 0, 0), (1, 0, 0), (0, 1, 0)), (1, 0, 0)),
+                (((0, 0, 0), (0, 1, 0), (1, 0, 0)), (0, 1, 0)),
+            ])
         """
+        cdef stl_facet facet_struct
+        # The "extra" item in every facet is only read in binary mode - it is
+        # ignored anywhere else.
+        facet_struct.extra = "00"
         current_facet_index = self._c_stl_file.stats.number_of_facets
         self._c_stl_file.stats.number_of_facets += len(facets)
         stl_reallocate(&self._c_stl_file)
         for facet in facets:
-            self._c_stl_file.facet_start[current_facet_index] = facet
-            stl_facet_stats(&self._c_stl_file, self._c_stl_file.facet_start[current_facet_index], False);
+            facet_struct.vertex = [{"x": x, "y": y, "z": z}
+                                   for (x, y, z) in facet[0]]
+            facet_struct.normal = {
+                "x": facet[1][0],
+                "y": facet[1][1],
+                "z": facet[1][2],
+            }
+            self._c_stl_file.facet_start[current_facet_index] = facet_struct
+            stl_facet_stats(&self._c_stl_file, facet_struct, False);
             current_facet_index += 1
 
     def repair(self,
