@@ -71,6 +71,11 @@ cdef class Stl(object):
         current_facet_index = self._c_stl_file.stats.number_of_facets
         self._c_stl_file.stats.number_of_facets += len(facets)
         stl_reallocate(&self._c_stl_file)
+        if stl_get_error(&self._c_stl_file):
+            # reset the facet count back to the original size
+            self._c_stl_file.stats.number_of_facets = current_facet_index
+            stl_clear_error(&self._c_stl_file)
+            raise AdmeshError('stl_reallocate')
         for facet in facets:
             facet_struct.vertex = [{"x": x, "y": y, "z": z}
                                    for (x, y, z) in facet[0]]
