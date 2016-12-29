@@ -17,6 +17,12 @@ class TestObjectCapabilities(object):
         assert len(facets[0]['vertex']) == 3
         assert facets[0]['vertex'][0]['x'] == 0
 
+    def test_add_facets(self):
+        stl = Stl('test/block.stl')
+        facet_count = len(stl)
+        stl.add_facets([(((0, 0, 0), (1, 1, 1), (1, 0, 0)), (1, 0, 0))])
+        assert len(stl) == facet_count + 1
+
     def test_str(self):
         '''Tests the output of str'''
         stl = Stl('test/block.stl')

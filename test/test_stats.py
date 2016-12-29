@@ -25,6 +25,13 @@ class TestStats(object):
         stl = Stl('test/block.stl')
         assert stl.stats['header'] == 'solid  admesh'.encode('UTF-8')
 
+    def test_add_facets_updates_stats(self):
+        '''Tests if adding new facets updates the mesh stats'''
+        stl = Stl('test/block.stl')
+        max_x = stl.stats['max']['x']
+        stl.add_facets([(((0, 0, 0), (1, 1, 1), (max_x + 1, 0, 0)), (1, 0, 0))])
+        assert max_x + 1 == stl.stats['max']['x']
+
     def test_write_to_stats(self):
         '''Test if writing to stats raises exception'''
         stl = Stl()
