@@ -69,9 +69,7 @@ cdef class Stl(object):
             ])
         """
         cdef stl_facet facet_struct
-        # The "extra" item in every facet is only read in binary mode - it is
-        # ignored anywhere else.
-        facet_struct.extra = "00"
+        cdef size_t i
         current_facet_index = self._c_stl_file.stats.number_of_facets
         self._c_stl_file.stats.number_of_facets += len(facets)
         stl_reallocate(&self._c_stl_file)
@@ -81,13 +79,13 @@ cdef class Stl(object):
             stl_clear_error(&self._c_stl_file)
             raise AdmeshError('stl_reallocate')
         for facet in facets:
-            facet_struct.vertex = [{"x": x, "y": y, "z": z}
-                                   for (x, y, z) in facet[0]]
-            facet_struct.normal = {
-                "x": facet[1][0],
-                "y": facet[1][1],
-                "z": facet[1][2],
-            }
+            for i in range(3):
+                facet_struct.vertex[i] = stl_vertex(facet[0][i][0],
+                                                    facet[0][i][1],
+                                                    facet[0][i][2])
+            facet_struct.normal = stl_normal(facet[1][0],
+                                             facet[1][1],
+                                             facet[1][2])
             self._c_stl_file.facet_start[current_facet_index] = facet_struct
             stl_facet_stats(&self._c_stl_file, facet_struct, False);
             current_facet_index += 1
