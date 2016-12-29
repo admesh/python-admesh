@@ -59,14 +59,24 @@ cdef class Stl(object):
         """
         Add one or more facets
 
-        every facet is a tuple of two elements:
+        Every facet is a tuple of two elements:
             * vertices: tuple of three points (each a tuple of three floats)
             * normal: tuple of three floats
+
+        Or a similar dict.
 
         Example usage:
             stl_object.add_facets([
                 (((0, 0, 0), (1, 0, 0), (0, 1, 0)), (1, 0, 0)),
                 (((0, 0, 0), (0, 1, 0), (1, 0, 0)), (0, 1, 0)),
+            ])
+
+        Or:
+            stl_object.add_facets([
+                {'vertex': [{'x': 0, 'y': 0, 'z': 0},
+                            {'x': 1, 'y': 0, 'z': 0},
+                            {'x': 0, 'y': 1, 'z': 0}],
+                 'normal': {'x': 1, 'y': 0, 'z': 0}},
             ])
         """
         cdef stl_facet facet_struct

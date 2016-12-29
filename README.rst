@@ -62,10 +62,13 @@ Use the ``Stl`` class provided.
             vertex['z']
 
     # add another set of facets
-    # every face is a tuple: (vertices, normal)
+    # every facet is a tuple (vertices, normal) or a dict
     stl.add_facets([
         (((0, 0, 0), (0, 1, 0), (0, 0, 1)), (1, 0, 0)),
-        (((0, 0, 0), (1, 0, 0), (0, 0, 1)), (0, 1, 0)),
+        {'vertex': [{'x': 0, 'y': 0, 'z': 0},
+                    {'x': 1, 'y': 0, 'z': 0},
+                    {'x': 0, 'y': 0, 'z': 1}],
+         'normal': {'x': 0, 'y': 1, 'z': 0}},
     ])
 
 Note that all C ADMesh functions start with ``stl_`` prefix and the Python methods of this module do not. Also note that not all C ADMesh functions are provided, because some would require more complicated approach and are not considered worthy. In case you are missing some functions, create `new issue <https://github.com/admesh/python-admesh/issues/new>`_.
