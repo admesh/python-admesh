@@ -12,7 +12,7 @@ requires = ['Cython>=0.22']
 
 setup(
     name='admesh',
-    version='0.98.5',
+    version='0.98.6',
     description='Python bindings for ADMesh, STL maipulation library',
     long_description=long_description,
     keywords='STL, mesh, 3D',

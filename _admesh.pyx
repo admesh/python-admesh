@@ -1,6 +1,5 @@
 from cadmesh cimport *
 
-
 class AdmeshError(Exception):
     pass
 
@@ -70,6 +69,13 @@ cdef class Stl(object):
         for facet in facets:
             self._c_stl_file.facet_start[current_facet_index] = facet
             current_facet_index += 1
+
+    def open(self, path):
+        """stl_open"""
+        import warnings
+        warnings.warn('The open() method is deprecated. Provide the path when '
+                      'initializing the object instead.', DeprecationWarning)
+        self._open(path)
 
     def repair(self,
                fixall_flag=True,

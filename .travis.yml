@@ -10,6 +10,9 @@ python:
 env:
 - ADMESH=0.98.1
 - ADMESH=0.98.2
+matrix:
+  allow_failures:
+  - python: pypy3
 # Use the new container-based infrastructure
 sudo: false
 cache:
@@ -28,7 +31,7 @@ before_install:
       cd ..;
   fi
 install:
-- pip install pytest==2.7.3
+- pip install --upgrade 'pytest>=3'
 - pip install -r requirements.txt
 - LDFLAGS=-Ladmesh-$ADMESH/.libs CFLAGS=-Iadmesh-$ADMESH/src python setup.py install
 script: LD_LIBRARY_PATH=admesh-$ADMESH/.libs py.test -v
