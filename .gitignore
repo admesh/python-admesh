@@ -9,3 +9,4 @@ dist
 __pycache__
 gccdump.s
 test/block_*
+.eggs
