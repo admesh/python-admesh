@@ -15,6 +15,7 @@ cache:
   directories:
   - $HOME/.cache/pip
   - $HOME/build/admesh/python-admesh/admesh-$ADMESH
+  - .eggs
   - .tox
 before_install:
 - if [ ! -f admesh-$ADMESH/.libs/admesh ]; then
