@@ -20,8 +20,9 @@ setup(
     author_email='miro@hroncok.cz',
     url='https://github.com/admesh/python-admesh',
     license='GPLv2+',
-    setup_requires=requires,
+    setup_requires=requires + ['pytest-runner'],
     install_requires=requires,
+    tests_require=['pytest'],
     packages=find_packages(),
     cmdclass={'build_ext': _autogen},
     ext_modules=[Extension("admesh", ["admesh.pyx"], libraries=["admesh"])],
@@ -42,6 +43,7 @@ setup(
                  'Programming Language :: Python :: 3.3',
                  'Programming Language :: Python :: 3.4',
                  'Programming Language :: Python :: 3.5',
+                 'Programming Language :: Python :: 3.6',
                  'Topic :: Multimedia :: Graphics :: 3D Modeling',
                  ],
 )

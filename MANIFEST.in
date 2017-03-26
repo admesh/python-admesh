@@ -1,4 +1,5 @@
 include _*
+include *.ini
 include README.rst
 include COPYING
 include autogen.py

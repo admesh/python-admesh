@@ -5,17 +5,21 @@ python:
 - '3.3'
 - '3.4'
 - '3.5'
+- '3.6'
 - pypy
 - pypy3
 env:
 - ADMESH=0.98.1
 - ADMESH=0.98.2
-# Use the new container-based infrastructure
-sudo: false
+# the pypy3 on Travis is too old
+matrix:
+  allow_failures:
+  - python: pypy3
 cache:
   directories:
   - $HOME/.cache/pip
   - $HOME/build/admesh/python-admesh/admesh-$ADMESH
+  - .tox
 before_install:
 - if [ ! -f admesh-$ADMESH/.libs/admesh ]; then
       wget https://github.com/admesh/admesh/releases/download/v$ADMESH/admesh-$ADMESH.tar.gz;
@@ -28,10 +32,8 @@ before_install:
       cd ..;
   fi
 install:
-- pip install --upgrade 'pytest>=3'
-- pip install -r requirements.txt
-- LDFLAGS=-Ladmesh-$ADMESH/.libs CFLAGS=-Iadmesh-$ADMESH/src python setup.py install
-script: LD_LIBRARY_PATH=admesh-$ADMESH/.libs py.test -v
+- pip install tox-travis
+script: LD_LIBRARY_PATH=$PWD/admesh-$ADMESH/.libs LDFLAGS=-L$PWD/admesh-$ADMESH/.libs CFLAGS=-I$PWD/admesh-$ADMESH/src tox
 deploy:
   provider: pypi
   user: hroncok
@@ -40,4 +42,4 @@ deploy:
   on:
     tags: true
     repo: admesh/python-admesh
-    python: pypy
+    python: '3.6'

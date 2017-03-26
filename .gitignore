@@ -10,3 +10,4 @@ __pycache__
 gccdump.s
 test/block_*
 .eggs
+.tox
