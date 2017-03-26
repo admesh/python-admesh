@@ -1,16 +1,16 @@
 language: python
 python:
-- '2.6'
-- '2.7'
-- '3.3'
-- '3.4'
-- '3.5'
-- '3.6'
 - pypy
+- '3.6'
+- '3.5'
+- '2.7'
+- '3.4'
+- '3.3'
 - pypy3.3-5.2-alpha1
+- '2.6'
 env:
-- ADMESH=0.98.1
 - ADMESH=0.98.2
+- ADMESH=0.98.1
 cache:
   directories:
   - $HOME/.cache/pip
@@ -39,4 +39,4 @@ deploy:
   on:
     tags: true
     repo: admesh/python-admesh
-    python: '3.6'
+    python: pypy
