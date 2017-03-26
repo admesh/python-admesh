@@ -1,14 +1,20 @@
 ADMesh bindings for Python
 ==========================
 
-.. image:: https://badge.fury.io/py/admesh.svg
-    :target: http://badge.fury.io/py/admesh
+.. image:: https://img.shields.io/pypi/v/admesh.svg 
+    :target: https://pypi.python.org/pypi/admesh
 
-.. image:: https://travis-ci.org/admesh/python-admesh.png?branch=master
+.. image:: https://img.shields.io/travis/admesh/python-admesh/master.svg
         :target: https://travis-ci.org/admesh/python-admesh
 
 .. image:: https://img.shields.io/github/license/admesh/python-admesh.svg?style=flat
         :target: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+
+.. image:: https://img.shields.io/pypi/pyversions/admesh.svg
+        :target: https://pypi.python.org/pypi/admesh
+
+.. image:: https://img.shields.io/pypi/implementation/admesh.svg
+        :target: https://pypi.python.org/pypi/admesh
 
 This module provides bindings for the `ADMesh <https://github.com/admesh/admesh>`_ library. It lets you manipulate 3D models in binary or ASCII STL format and partially repair them if necessary.
 
