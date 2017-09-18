@@ -23,6 +23,7 @@ class Autogen(build_ext, object):
         'allocate',
         'count_facets',
         'write_binary_block',
+        'write_edge',
         'put_little_int',
         'put_little_float',
     ]
