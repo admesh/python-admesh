@@ -1,4 +1,6 @@
 language: python
+
+# keep pypy first!
 python:
 - pypy
 - '3.6'
@@ -8,17 +10,22 @@ python:
 - '3.3'
 - pypy3.5-5.8.0
 - '2.6'
+
 env:
-- ADMESH=0.98.3
-- ADMESH=0.98.2
-- ADMESH=0.98.1
+  global:
+  - CIBW_TEST_REQUIRES='pytest'
+  - CIBW_TEST_COMMAND='pytest -v {project}/test'
+  matrix:
+  - ADMESH=0.98.3
+  - ADMESH=0.98.2
+
 cache:
   directories:
   - $HOME/.cache/pip
   - $HOME/build/admesh/python-admesh/admesh-$ADMESH
   - .eggs
-  - .tox
-before_install:
+
+install:
 - if [ ! -f admesh-$ADMESH/.libs/admesh ]; then
       wget https://github.com/admesh/admesh/releases/download/v$ADMESH/admesh-$ADMESH.tar.gz;
       tar -zxf admesh-$ADMESH.tar.gz;
@@ -29,11 +36,40 @@ before_install:
       cp src/stl.h src/admesh/stl.h;
       cd ..;
   fi
-install:
 - pip install tox-travis
 script: LD_LIBRARY_PATH=$PWD/admesh-$ADMESH/.libs LDFLAGS=-L$PWD/admesh-$ADMESH/.libs CFLAGS=-I$PWD/admesh-$ADMESH/src tox
+
+matrix:
+  include:
+  - sudo: required
+    services:
+    - docker
+    env: CIBW_SKIP='*i686'
+         CIBW_BEFORE_BUILD='rpm -q admesh-devel || yum install -y --nogpgcheck /project/travis/*.x86_64.rpm'
+    install:
+    - pip install cibuildwheel==0.5.1
+    script:
+    - cibuildwheel --output-dir dist
+  - sudo: required
+    services:
+    - docker
+    env: CIBW_SKIP='*x86_64'
+         CIBW_BEFORE_BUILD='rpm -q admesh-devel || yum install -y --nogpgcheck /project/travis/*.i386.rpm'
+    install:
+    - pip install cibuildwheel==0.5.1
+    script:
+    - cibuildwheel --output-dir dist
+  - os: osx
+    language: generic
+    env: CIBW_BEFORE_BUILD='brew install admesh; {pip} install pytest-runner Cython'
+    install:
+    - pip install cibuildwheel==0.5.1
+    script:
+    - cibuildwheel --output-dir dist
+
 deploy:
   provider: pypi
+  skip_cleanup: true
   user: hroncok
   password:
     secure: KAJOtf4HDXzL1LQsqGVPoHPniLcGcSwHvtp6gyiLUFwKmhIoqd7+ONSCVfDBCuIysOcsyXHGt1piMrMgyvuykupnFu43MDatWYk9KqaBs6/gyhoI/Ha7tavAiTMlaToEyNQGh7K6FZoVbVpEELtnuytRkWPqGfNTonEpWnmWMKw=
@@ -41,3 +77,5 @@ deploy:
     tags: true
     repo: admesh/python-admesh
     python: pypy
+
+# pypy up here will match the "normal" build as well as cibuildwheel

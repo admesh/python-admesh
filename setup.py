@@ -8,7 +8,6 @@ def _autogen(*args, **kwargs):
     return Autogen(*args, **kwargs)
 
 long_description = ''.join(open('README.rst').readlines())
-requires = ['Cython>=0.22']
 
 setup(
     name='admesh',
@@ -20,8 +19,7 @@ setup(
     author_email='miro@hroncok.cz',
     url='https://github.com/admesh/python-admesh',
     license='GPLv2+',
-    setup_requires=requires + ['pytest-runner'],
-    install_requires=requires,
+    setup_requires=['Cython>=0.22', 'pytest-runner'],
     tests_require=['pytest'],
     packages=find_packages(),
     cmdclass={'build_ext': _autogen},

@@ -21,7 +21,16 @@ This module provides bindings for the `ADMesh <https://github.com/admesh/admesh>
 Installation
 ------------
 
-First, you'll need to install the `ADMesh <https://github.com/admesh/admesh>`_ library. This release is designed for ADMesh 0.98.x. Follow the instructions there. Then you can install this as usual with **one** of the following:
+There are wheels available for Linux and macOS X. All you need to do is:
+
+.. code:: sh
+
+    pip install admesh
+
+If you have a platform not supported by the above,
+you'll need to install the C `ADMesh <https://github.com/admesh/admesh>`_ library.
+
+This release is designed for ADMesh 0.98.x. Follow the instructions there. Then you can install this as usual with **one** of the following:
 
 .. code:: sh
 
