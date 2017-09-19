@@ -36,7 +36,7 @@ install:
       cp src/stl.h src/admesh/stl.h;
       cd ..;
   fi
-- pip install tox-travis
+- pip install tox-travis Cython
 script: LD_LIBRARY_PATH=$PWD/admesh-$ADMESH/.libs LDFLAGS=-L$PWD/admesh-$ADMESH/.libs CFLAGS=-I$PWD/admesh-$ADMESH/src tox
 
 matrix:
@@ -45,7 +45,7 @@ matrix:
     services:
     - docker
     env: CIBW_SKIP='*i686'
-         CIBW_BEFORE_BUILD='rpm -q admesh-devel || yum install -y --nogpgcheck /project/travis/*.x86_64.rpm'
+         CIBW_BEFORE_BUILD='rpm -q admesh-devel || yum install -y --nogpgcheck /project/travis/*.x86_64.rpm; {pip} install Cython'
     install:
     - pip install cibuildwheel==0.5.1
     script:
@@ -54,7 +54,7 @@ matrix:
     services:
     - docker
     env: CIBW_SKIP='*x86_64'
-         CIBW_BEFORE_BUILD='rpm -q admesh-devel || yum install -y --nogpgcheck /project/travis/*.i386.rpm'
+         CIBW_BEFORE_BUILD='rpm -q admesh-devel || yum install -y --nogpgcheck /project/travis/*.i386.rpm; {pip} install Cython'
     install:
     - pip install cibuildwheel==0.5.1
     script:
@@ -63,7 +63,7 @@ matrix:
     language: generic
     env: CIBW_BEFORE_BUILD='brew install admesh; {pip} install pytest-runner Cython'
     install:
-    - pip install cibuildwheel==0.5.1
+    - pip install cibuildwheel==0.5.1 Cython
     script:
     - cibuildwheel --output-dir dist
   allow_failures:
