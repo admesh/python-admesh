@@ -66,6 +66,9 @@ matrix:
     - pip install cibuildwheel==0.5.1
     script:
     - cibuildwheel --output-dir dist
+  allow_failures:
+    - os: osx
+  fast_finish: true
 
 deploy:
   provider: pypi
