@@ -61,7 +61,9 @@ matrix:
     - cibuildwheel --output-dir dist
   - os: osx
     language: generic
-    env: CIBW_BEFORE_BUILD='brew install admesh; {pip} install pytest-runner Cython'
+    env: CIBW_BEFORE_BUILD='{pip} install pytest-runner Cython'
+    before_install:
+    - brew install admesh
     install:
     - pip install cibuildwheel==0.5.1 Cython
     script:
