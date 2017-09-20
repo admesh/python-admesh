@@ -1,4 +1,5 @@
 language: python
+sudo: false
 
 # keep pypy first!
 python:
