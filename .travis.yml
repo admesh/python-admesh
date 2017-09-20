@@ -82,6 +82,3 @@ deploy:
   on:
     tags: true
     repo: admesh/python-admesh
-    python: pypy
-
-# pypy up here will match the "normal" build as well as cibuildwheel
