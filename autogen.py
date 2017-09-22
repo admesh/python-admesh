@@ -1,7 +1,9 @@
 from __future__ import print_function
 from Cython.Distutils import build_ext
+import glob
 import subprocess
 import os
+import platform
 import sys
 
 
@@ -178,6 +180,9 @@ class Autogen(build_ext, object):
                                        extra=extra)
 
     def get_header(self, header):
+        if platform.system().startswith('Windows'):
+            return self.get_header_windows(header)
+
         cflags = os.environ.get('CFLAGS', '')
         p = subprocess.Popen('gcc -v -E -'.split() + cflags.split(), stdin=subprocess.PIPE,
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -196,3 +201,11 @@ class Autogen(build_ext, object):
                     print("found %s" % candidate)
                     return candidate
         return None
+
+    def get_header_windows(self, header):
+        path = 'windows/admesh*/include/{h}'.format(h=header)
+        try:
+            path = glob.glob(path)[0]
+        except IndexError:
+            raise RuntimeError('Run `python windows/prepare_admesh.py` first!')
+        return path

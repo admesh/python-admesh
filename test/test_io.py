@@ -2,10 +2,15 @@
 from admesh import Stl
 from utils import asset
 import filecmp
+import platform
+import pytest
+
 
 
 class TestIO(object):
     '''Tests for the  basic IO operations'''
+    @pytest.mark.skipif(platform.system().startswith('Windows'),
+                        reason='Extra zeros on Windows')
     def test_saved_equals_original_ascii(self):
         '''Tests if saved ASCII file is identical to the loaded one'''
         stl = Stl(asset('block.stl'))

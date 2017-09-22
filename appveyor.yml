@@ -1,0 +1,26 @@
+environment:
+  CIBW_BEFORE_BUILD: '{pip} install Cython pytest-runner'
+  CIBW_TEST_REQUIRES: 'pytest'
+  CIBW_TEST_COMMAND: 'python -m pytest -v -s {project}\test'
+  TWINE_USERNAME: hroncok
+  # Note: TWINE_PASSWORD is set in Appveyor settings
+  matrix:
+  - CIBW_SKIP: '*32'
+  - CIBW_SKIP: '*64'
+
+build_script:
+  - pip install cibuildwheel==0.5.1 requests Cython pytest-runner
+  - python windows\prepare_admesh.py
+  - cibuildwheel --output-dir wheelhouse
+  - python windows\inject_admesh.py wheelhouse\*.whl
+  - >
+    IF "%APPVEYOR_REPO_TAG%" == "true"
+    (
+    python -m pip install twine
+    &&
+    python -m twine upload wheelhouse/*.whl
+    )
+
+artifacts:
+  - path: "wheelhouse\\*.whl"
+    name: Wheels

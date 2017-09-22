@@ -1,13 +1,25 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from setuptools import setup, find_packages, Extension
+import platform
+from setuptools import setup, Extension
 
 
 def _autogen(*args, **kwargs):
     from autogen import Autogen
     return Autogen(*args, **kwargs)
 
+
 long_description = ''.join(open('README.rst').readlines())
+ext_kwargs = {}
+
+
+if platform.system().startswith('Windows'):
+    ext_kwargs['include_dirs'] = ['windows/admesh/include/']
+    ext_kwargs['library_dirs'] = ['windows/admesh/lib/']
+    ext_kwargs['libraries'] = ['libadmesh']
+else:
+    ext_kwargs['libraries'] = ['admesh']
+
 
 setup(
     name='admesh',
@@ -21,9 +33,8 @@ setup(
     license='GPLv2+',
     setup_requires=['Cython>=0.22', 'pytest-runner'],
     tests_require=['pytest'],
-    packages=find_packages(),
     cmdclass={'build_ext': _autogen},
-    ext_modules=[Extension("admesh", ["admesh.pyx"], libraries=["admesh"])],
+    ext_modules=[Extension('admesh', ['admesh.pyx'], **ext_kwargs)],
     classifiers=['Development Status :: 5 - Production/Stable',
                  'Intended Audience :: Developers',
                  'Intended Audience :: Manufacturing',

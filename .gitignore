@@ -11,3 +11,5 @@ gccdump.s
 test/block_*
 .eggs
 .tox
+/windows/admesh
+*.whl
