@@ -24,10 +24,10 @@ cdef class Stl(object):
                 raise AdmeshError('stl_initialize')
             self._c_stl_file.stats.type = Stl.INMEMORY
 
-    property stats:
+    @property
+    def stats(self):
         """The statistics about the STL model"""
-        def __get__(self):
-            return self._c_stl_file.stats
+        return self._c_stl_file.stats
 
     def __str__(self):
         header = str(self._c_stl_file.stats.header.decode('ascii'))

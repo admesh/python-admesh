@@ -28,7 +28,7 @@ class Autogen(build_ext, object):
         'put_little_float',
     ]
     PYX_IGNORE = ['open', 'close', 'get_error', 'clear_error', 'repair',
-                  'reallocate']
+                  'reallocate', 'facet_stats']
 
     PXD = 'c' + NAME + '.pxd'
     _PXD = '_' + PXD
