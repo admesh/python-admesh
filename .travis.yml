@@ -65,7 +65,7 @@ matrix:
     before_install:
     - brew install admesh
     install:
-    - pip install cibuildwheel==0.9.1 Cython twine
+    - sudo pip2 install cibuildwheel==0.9.1 Cython twine
     script:
     - cibuildwheel --output-dir dist
   allow_failures:
