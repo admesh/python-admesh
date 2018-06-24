@@ -68,8 +68,6 @@ matrix:
     - sudo pip2 install cibuildwheel==0.9.1 Cython twine
     script:
     - cibuildwheel --output-dir dist
-  allow_failures:
-    - os: osx
   fast_finish: true
 
 deploy:
