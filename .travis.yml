@@ -4,13 +4,12 @@ sudo: false
 # keep pypy first!
 python:
 - pypy
+- '3.7-dev'
 - '3.6'
 - '3.5'
 - '2.7'
 - '3.4'
-- '3.3'
 - pypy3.5-5.8.0
-- '2.6'
 
 env:
   global:
@@ -48,7 +47,7 @@ matrix:
     env: CIBW_SKIP='*i686'
          CIBW_BEFORE_BUILD='rpm -q admesh-devel || yum install -y --nogpgcheck /project/travis/*.x86_64.rpm; {pip} install Cython'
     install:
-    - pip install cibuildwheel==0.5.1
+    - pip install cibuildwheel==0.9.1
     script:
     - cibuildwheel --output-dir dist
   - sudo: required
@@ -57,7 +56,7 @@ matrix:
     env: CIBW_SKIP='*x86_64'
          CIBW_BEFORE_BUILD='rpm -q admesh-devel || yum install -y --nogpgcheck /project/travis/*.i386.rpm; {pip} install Cython'
     install:
-    - pip install cibuildwheel==0.5.1
+    - pip install cibuildwheel==0.9.1
     script:
     - cibuildwheel --output-dir dist
   - os: osx
@@ -66,7 +65,7 @@ matrix:
     before_install:
     - brew install admesh
     install:
-    - pip install cibuildwheel==0.5.1 Cython twine
+    - pip install cibuildwheel==0.9.1 Cython twine
     script:
     - cibuildwheel --output-dir dist
   allow_failures:
